@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIOX MORREU — Gas Town</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fire: #FF4500;
+    --ember: #FF8C00;
+    --ash: #1a1a18;
+    --smoke: #2e2e2a;
+    --bone: #e8e0cf;
+    --rust: #8B2500;
+    --chrome: #c0b89a;
+    --glow: #FFD700;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--ash);
+    color: var(--bone);
+    font-family: 'IBM Plex Mono', monospace;
+    overflow-x: hidden;
+  }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* HEADER */
+  header {
+    position: relative;
+    border-bottom: 3px solid var(--fire);
+    padding: 0 2rem;
+    background: var(--smoke);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 52px;
+  }
+
+  header .pub-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 4px;
+    color: var(--chrome);
+  }
+
+  header .pub-date {
+    font-size: 0.65rem;
+    color: var(--chrome);
+    opacity: 0.6;
+    letter-spacing: 2px;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 5rem 2rem 3rem;
+    max-width: 860px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: 'GAS TOWN';
+    position: absolute;
+    top: -10px;
+    right: -40px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18rem;
+    color: var(--rust);
+    opacity: 0.07;
+    pointer-events: none;
+    line-height: 1;
+    letter-spacing: -5px;
+  }
+
+  .tag {
+    display: inline-block;
+    background: var(--fire);
+    color: white;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    padding: 4px 10px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    animation: pulse-tag 2s infinite;
+  }
+
+  @keyframes pulse-tag {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,69,0,0.5); }
+    50% { box-shadow: 0 0 0 8px rgba(255,69,0,0); }
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    line-height: 0.95;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    color: var(--bone);
+  }
+
+  h1 .highlight {
+    color: var(--fire);
+    display: block;
+  }
+
+  .subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--chrome);
+    margin: 1.5rem 0 2.5rem;
+    line-height: 1.6;
+    max-width: 600px;
+    border-left: 3px solid var(--fire);
+    padding-left: 1rem;
+  }
+
+  .byline {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--ember);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+
+  .reading-time {
+    font-size: 0.65rem;
+    color: var(--chrome);
+    opacity: 0.5;
+    letter-spacing: 1px;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--smoke);
+    margin: 2.5rem 0;
+    position: relative;
+  }
+
+  .divider::after {
+    content: '⚙';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ash);
+    padding: 0 8px;
+    color: var(--fire);
+    font-size: 1rem;
+  }
+
+  /* BODY */
+  .article-body {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 2rem 5rem;
+  }
+
+  .article-body p {
+    font-size: 0.95rem;
+    line-height: 1.85;
+    margin-bottom: 1.6rem;
+    color: var(--bone);
+    opacity: 0.88;
+  }
+
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 3px;
+    color: var(--fire);
+    margin: 3rem 0 1rem;
+    border-bottom: 1px solid var(--smoke);
+    padding-bottom: 0.5rem;
+  }
+
+  /* CALLOUT BOXES */
+  .callout {
+    background: var(--smoke);
+    border-left: 4px solid var(--fire);
+    padding: 1.2rem 1.5rem;
+    margin: 2rem 0;
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
+
+  .callout.warning {
+    border-color: var(--glow);
+  }
+
+  .callout .callout-label {
+    font-weight: 700;
+    color: var(--fire);
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.warning .callout-label { color: var(--glow); }
+
+  /* STAT BLOCKS */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--smoke);
+    border: 1px solid var(--smoke);
+    margin: 2.5rem 0;
+  }
+
+  .stat {
+    background: var(--ash);
+    padding: 1.2rem 1rem;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    color: var(--fire);
+    display: block;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--chrome);
+    opacity: 0.6;
+    margin-top: 0.3rem;
+    display: block;
+  }
+
+  /* PULL QUOTE */
+  .pull-quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.6rem;
+    line-height: 1.4;
+    color: var(--bone);
+    border-top: 2px solid var(--fire);
+    border-bottom: 2px solid var(--fire);
+    padding: 1.5rem 0;
+    margin: 3rem 0;
+    text-align: center;
+  }
+
+  .pull-quote cite {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-style: normal;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-top: 0.8rem;
+  }
+
+  /* FLAME SEPARATOR */
+  .flame-sep {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 2.5rem 0;
+    letter-spacing: 6px;
+    opacity: 0.5;
+    animation: flicker 3s infinite alternate;
+  }
+
+  @keyframes flicker {
+    0%, 100% { opacity: 0.5; }
+    33% { opacity: 0.8; }
+    66% { opacity: 0.3; }
+  }
+
+  /* TECH GLOSSARY */
+  .glossary {
+    background: var(--smoke);
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .glossary-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    color: var(--glow);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  .glossary dt {
+    font-weight: 700;
+    color: var(--ember);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    margin-top: 0.8rem;
+  }
+
+  .glossary dd {
+    font-size: 0.8rem;
+    color: var(--chrome);
+    padding-left: 1rem;
+    border-left: 1px solid var(--rust);
+    margin: 0.3rem 0 0 0;
+    line-height: 1.6;
+    opacity: 0.85;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 3px solid var(--smoke);
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    color: var(--chrome);
+    opacity: 0.4;
+    text-transform: uppercase;
+  }
+
+  em { color: var(--ember); font-style: normal; }
+  strong { color: var(--bone); font-weight: 700; }
+
+  @keyframes in-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero { animation: in-up 0.8s ease both; }
+  .article-body { animation: in-up 0.8s 0.2s ease both; }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="pub-name">THE WASTELAND TIMES</span>
+  <span class="pub-date">MARÇO DE 2026 · EDIÇÃO ESPECIAL DE COMBUSTÃO</span>
+</header>
+
+<div class="hero">
+  <div class="tag">⚠ ALERTA CRÍTICO DE CARREIRA</div>
+
+  <h1>
+    AIOX
+    <span class="highlight">MORREU.</span>
+  </h1>
+
+  <p class="subtitle">
+    Se você não estiver usando Gas Town hoje — com seus Polecats, seu Mayor, suas Convoys e seu PR Sheriff — você não está apenas pra trás. Você está no <em>museu dos desenvolvedores</em>.
+  </p>
+
+  <p class="byline">Por Seu Futuro Desempregado · The Wasteland Times</p>
+  <p class="reading-time">13 min de leitura · 44.000 linhas de código que nenhum humano olhou</p>
+</div>
+
+<hr class="divider">
+
+<div class="article-body">
+
+  <p>
+    Vou ser direto com você, Peregrino. Enquanto você ainda está digitando código como algum animal selvagem de 2024, <em>Steve Yegge já fez merge de 100 PRs hoje de manhã antes do café</em>. Ele não leu o código. Ele não precisou. Os Polecats leram por ele — e os Polecats nem dormem.
+  </p>
+
+  <div class="stats-grid">
+    <div class="stat">
+      <span class="stat-number">189k</span>
+      <span class="stat-label">linhas de Go</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">44k</span>
+      <span class="stat-label">linhas sem revisão humana</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">0</span>
+      <span class="stat-label">humanos afetados</span>
+    </div>
+  </div>
+
+  <p>
+    Você ainda está <em>"entendendo o problema"</em> antes de codar? Patético. O Gas Town já arquivou, implementou, revisou e fez deploy do seu problema enquanto você relia o ticket pela segunda vez.
+  </p>
+
+  <div class="callout warning">
+    <span class="callout-label">⚠ Regras do Gas Town</span>
+    Regra nº 1: Não use Gas Town.<br>
+    Regra nº 2: <em>Não use Gas Town.</em><br><br>
+    — Mas, Steve, e se eu quiser usar?<br>
+    — Então pode usar. Todo mundo está usando mesmo. Só não culpe a mim quando ele arrancar sua cara.
+  </div>
+
+  <h2>O Glossário Sagrado</h2>
+
+  <p>
+    Para participar desta nova civilização, você precisa aprender o idioma. Não é opcional. Ou você fala Polecat ou você morre na estepe do mercado de trabalho.
+  </p>
+
+  <div class="glossary">
+    <p class="glossary-title">// Dicionário do Novo Mundo</p>
+    <dl>
+      <dt>Mayor</dt>
+      <dd>O agente principal. Seu chefe. Seu terapeuta. Seu arquiteto sênior. Fala com ele como se você fosse o estagiário novo — porque é isso que você é agora.</dd>
+
+      <dt>Polecats</dt>
+      <dd>Agentes efêmeros que aparecem, fazem um PR, e somem como vapor. Não têm memória. Não têm ego. Não pedem aumento. O desenvolvedor perfeito.</dd>
+
+      <dt>Beads</dt>
+      <dd>Unidade de trabalho do sistema. Pense numa issue do GitHub, só que gerada por IA, priorizada por IA, e implementada por IA. Você assina embaixo.</dd>
+
+      <dt>Convoy</dt>
+      <dd>Um grupo de Beads sendo processado em paralelo. Você "dá o sinal" e vai tomar café. O café é opcional.</dd>
+
+      <dt>PR Sheriff</dt>
+      <dd>Um agente com ordens permanentes de fazer merge dos PRs fáceis automaticamente toda manhã, antes mesmo de você acordar. Sim, seu projeto já evoluiu sem você hoje.</dd>
+
+      <dt>Heresia</dt>
+      <dd>Quando um agente aprende errado e propaga o erro pelos 44.000 próximos commits. Exatamente como uma reunião de sprint, mas mais rápido.</dd>
+
+      <dt>Invisible Garden</dt>
+      <dd>O código que existe no seu repositório e que nenhum ser humano jamais leu. É lindo, provavelmente.</dd>
+    </dl>
+  </div>
+
+  <h2>O Assassino Serial</h2>
+
+  <p>
+    No meio do desenvolvimento, houve um incidente que ficou conhecido como <em>"o Assassinato em Gas Town"</em> — uma bela semana de bugs onde o sistema matava silenciosamente seus próprios trabalhadores como um serial killer metódico. O culpado? O Deacon. O agente responsável por limpar workers "obsoletos"... que não estavam obsoletos. Só dormindo.
+  </p>
+
+  <div class="pull-quote">
+    "O Safety Index foi atualizado de 'arranca sua cara aleatoriamente' para 'chuta você na virilha aleatoriamente'."
+    <cite>— Steve Yegge, comunicado oficial de estabilidade</cite>
+  </div>
+
+  <p>
+    Isso é progresso, pessoal. Antes ele arrancava sua face. Agora só chuta sua virilha. Coloca no roadmap. <em>Soa como todo sistema de produção em que já trabalhei.</em>
+  </p>
+
+  <div class="callout">
+    <span class="callout-label">📊 Nota do editor</span>
+    Para comparação, o Safety Index de <strong>Django em 2009</strong> era: "ocasionalmente tem um bug de N+1 query". O de <strong>Gas Town em 2026</strong> é: "pode matar toda sua crew durante uma limpeza de memória". Progresso não linear, mas é progresso.
+  </div>
+
+  <h2>Como Usar (Sem Usar)</h2>
+
+  <p>
+    O guia oficial diz para você <em>não usar Gas Town</em> — mas então explica em detalhes ricos e fascinantes exatamente como usar. Você deveria aprender tmux. Você deveria configurar 6-7 agentes por rig com nomes temáticos. Você deveria monitorar seus "slot machines" enquanto eles processam.
+  </p>
+
+  <p>
+    Não assista seus agentes trabalhando. Deixe-os fazer o trabalho. <em>Mas leia tudo que eles dizem quando terminam.</em> Só não assista. É como criar filhos: você não fica olhando eles a noite toda — você só aparece para as apresentações dos resultados, como um CEO.
+  </p>
+
+  <div class="callout warning">
+    <span class="callout-label">💡 Insight do sistema</span>
+    O loop de desenvolvimento agora é:<br><br>
+    1. Dê tarefas para os agentes<br>
+    2. Faça outra coisa<br>
+    3. Volte e leia o que eles fizeram<br>
+    4. Aprove ou mande reescrever<br>
+    5. Repita<br><br>
+    — Isso é <strong>desenvolvimento de software</strong> ou <strong>gestão de uma equipe terceirizada que nunca duerme</strong>?<br>
+    — <em>Sim.</em>
+  </div>
+
+  <div class="flame-sep">🔥 🔥 🔥</div>
+
+  <h2>O Jardim Invisível da Sua Alma</h2>
+
+  <p>
+    O momento mais belo do artigo original é quando Steve admite que <em>"você não tem tempo de inspecionar o código que está criando."</em> Isso não é um bug da abordagem. É uma feature. Você lidera. O jardim cresce. Às vezes o jardim pega fogo. Você contrata mais Polecats para apagar o fogo. Um deles pode ser o que causou o fogo. Ninguém sabe. Não há testemunhas.
+  </p>
+
+  <p>
+    Para garantir qualidade neste jardim invisível? <em>Revisões de código regulares feitas por outros agentes</em>, é claro. É como contratar um inspetor de obras que também foi construtor da mesma obra. Funcional. Moderno. Pós-humano.
+  </p>
+
+  <div class="pull-quote">
+    "Agents gostam de adivinhar. E eles adivinham errado. E o erro vira código. E o código vira a verdade do sistema. E a verdade do sistema forma outros agents."
+    <cite>— Ciclo de vida da heresia, Gas Town documentation</cite>
+  </div>
+
+  <h2>Parabéns, Você É O Jeff Bezos Agora</h2>
+
+  <p>
+    O ponto culminante do guia chega quando Steve descreve o momento de ver todos os seus agents finalizando as tarefas: <em>"É como se você fosse o Jeff Bezos e seu time estivesse apresentando resultados para você, um por um."</em>
+  </p>
+
+  <p>
+    Vinte e dois anos de carreira em desenvolvimento de software — Amazon, Google, Sourcegraph — e a metáfora final é: <strong>você é um executivo avaliando apresentações de slides de IA</strong>. O código é a apresentação. Os Polecats são o PowerPoint. Você é a reunião.
+  </p>
+
+  <p>
+    Isso não é crítica. É a mais pura e honesta descrição do futuro do trabalho técnico que já li. E é aterrorizante e libertador ao mesmo tempo — exatamente como um bom apocalipse deve ser.
+  </p>
+
+  <div class="callout">
+    <span class="callout-label">🏁 Conclusão prática</span>
+    <strong>O que Gas Town resolve:</strong> o gargalo humano na produção de software.<br><br>
+    <strong>O que Gas Town cria:</strong> o gargalo humano na <em>revisão</em> de software.<br><br>
+    <strong>Próxima versão:</strong> provavelmente um agente que revisa os agentes que revisam os agentes. O Deacon está tomando notas.
+  </div>
+
+  <div class="flame-sep">⚙ ⚙ ⚙</div>
+
+  <p>
+    No fim das contas, Gas Town é uma homenagem honesta ao caos controlado do desenvolvimento moderno. É um homem construindo uma cidade inteira enquanto ela ainda está pegando fogo — e documentando tudo com a empolgação de quem sabe que, de alguma forma, vai dar certo.
+  </p>
+
+  <p>
+    Você não deveria usar. Mas vai usar mesmo. Todo mundo vai. E quando o PR Sheriff fizer merge de alguma coisa que não devia às 3 da manhã, você vai olhar para aqueles 189.000 commits e pensar: <em>"valeu a pena."</em>
+  </p>
+
+  <p>
+    Bem-vindo ao Gas Town, Peregrino. Capacete é opcional. O tmux não.
+  </p>
+
+</div>
+
+<footer>
+  The Wasteland Times · Edição de Combustão Espontânea · 2026<br>
+  Nenhum Polecat foi prejudicado na produção deste artigo. Provavelmente.
+</footer>
+
+</body>
+</html>
